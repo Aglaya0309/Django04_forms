@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список фильмов</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        .add-film-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .add-film-btn:hover {
+            background-color: #2980b9;
+        }
+        .film-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .film-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .film-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .film-title {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .film-section {
+            margin-bottom: 15px;
+        }
+        .section-label {
+            font-weight: bold;
+            color: #3498db;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .film-description, .film-review {
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .film-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            text-align: right;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        .empty-list {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Моя коллекция фильмов</h1>
+
+    <a href="{% url 'add_film' %}" class="add-film-btn">+ Добавить новый фильм</a>
+
+    <div class="film-container">
+        {% for film in films %}
+        <div class="film-card">
+            <h2 class="film-title">{{ film.title }}</h2>
+
+            <div class="film-section">
+                <span class="section-label">Описание:</span>
+                <div class="film-description">{{ film.description }}</div>
+            </div>
+
+            <div class="film-section">
+                <span class="section-label">Мой отзыв:</span>
+                <div class="film-review">{{ film.review }}</div>
+            </div>
+
+            <div class="film-date">
+                Добавлено: {{ film.created_at|date:"j E Y, H:i" }}
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-list">
+            Ваша коллекция фильмов пуста. Добавьте первый фильм!
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
